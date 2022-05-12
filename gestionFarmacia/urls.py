@@ -18,5 +18,5 @@ from django.urls import path, include
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', include('reserva.urls'))
+    path('', include('reserva.urls')) #esto permite acceder a las vistas html creadas en la app reserva
 ]

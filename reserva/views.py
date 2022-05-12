@@ -1,6 +1,8 @@
 from django.shortcuts import render
 
-# Create your views here.
-
+# Aquí es donde declaramos nuestras vistas personalizadas, a partir de los html que tenemos en la carpeta templates
+#en el codigo de abajo solo se pone reserva porque la función busca automáticamente la carpeta templates
 def home(request):
-    return render(request, 'reserva/index.html')
+    return render(request, 'reserva/index.html') 
+#lo que hicimos fue definir como home, el archivo html que se llama index
+#esto quiere decir que cuando la url de la pagina no tenga nada después del /, nos redirecciona a esta pagina index

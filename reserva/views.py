@@ -6,3 +6,5 @@ def home(request):
     return render(request, 'reserva/home.html') 
 #lo que hicimos fue definir como home, el archivo html que se llama home
 #esto quiere decir que cuando la url de la pagina no tenga nada después del /, nos redirecciona a esta pagina home
+def login(request):
+    return render(request, 'reserva/login.html') 

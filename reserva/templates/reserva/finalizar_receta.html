@@ -1,0 +1,54 @@
+{% extends 'reserva/base.html' %}
+{% load static %}
+
+{% block content %}
+
+<div class="container w-75 bg-light mt-5 rounded shadow" >
+    <div class="row p-5">
+        <div class="col-lg-6">
+			<div class="box-element" id="form-wrapper">
+                <form id="form">
+					<div id="user-info">
+						<div class="form-field">
+							<input required class="form-control" type="text" name="name" placeholder="Nombre">
+						</div>
+						<div class="form-field">
+							<input required class="form-control" type="email" name="email" placeholder="">
+						</div>
+					</div>
+					
+					<div id="Indicaciones">
+						<hr>
+						<p>Indicaciones:</p>
+						<hr>
+						<div class="form-in d-flex">
+                            <textarea class="form-control" id="indicaciones" rows="5"></textarea>
+						</div>
+					</div>
+
+					<hr>
+					<input id="form-button" class="btn btn-success" type="submit" value="Solicitar">
+				</form>
+			</div>
+			
+		</div>
+
+		<div class="col-lg-6">
+			<div class="box-element">
+                <a href="{% url 'crear_receta' %}" class="btn btn-outline-primary">Modificar receta</a>
+				<hr>
+				<h3>Receta</h3>
+				<hr>
+				<div class="cart-row">
+					<div style="flex:1"><p>Metformina</p></div>
+					<div style="flex:2"><p>Metformina Clorhidrato 500mg</p></div>
+					<div style="flex:1"><p>2</p></div>
+				</div>
+				<h5>Items:   2</h5>
+			</div>
+		</div>
+
+
+
+
+{% endblock %}

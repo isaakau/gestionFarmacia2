@@ -1,0 +1,55 @@
+{% extends 'reserva/base.html' %}
+{% load static %}
+
+{% block content %}
+       
+<div class="container w-75 bg-light mt-5 rounded shadow" >
+  <div class="row p-5">
+    <div class="col-12">
+      <a href="{% url 'receta' %}" class="btn btn-outline-primary">Agregar más medicamentos</a>
+      <br>
+      <hr>
+      <br>
+      <table class="table">
+        <tr>
+          <th>
+            <h5>Total Medicamentos: <strong>3</strong></h5>
+          </th>
+          <th class="d-flex justify-content-end">
+            <a href="{% url 'finalizar_receta' %}" class="btn btn-outline-success">Finalizar receta</a>
+          </th>
+        </tr>
+      </table>
+    </div>
+  </div>  
+</div>
+
+<div class="container w-75 bg-light mt-5 rounded shadow" >
+  <div class="row p-3 align-items-stretch">
+    <div style="flex:2"><strong>Medicamento</strong></div>
+    <div style="flex:2"><strong>Principio Activo</strong></div>
+    <div style="flex:1"><strong>Formato</strong></div>
+    <div style="flex:1"><strong>Categoría</strong></div>
+    <div style="flex:1"><strong>Laboratorio</strong></div>
+    <div style="flex:1"><strong>Cantidad</strong></div>
+  </div>
+
+  <div class="row p-3 align-items-stretch">
+    <div style="flex:2">Metformina</div>
+    <div style="flex:2">Metformina Clorhidrato 500mg</div>
+    <div style="flex:1">Comprimidos</div>
+    <div style="flex:1">Hipoglicemiante oral</div>
+    <div style="flex:1">Laboratorio Chile</div>
+    <div style="flex:1">
+      <p class="quantity">2</p>
+      <div class="quantity">
+        <img class="chg-quantity" src="{% static  'reserva/img/arriba.png' %}">
+    
+        <img class="chg-quantity" src="{% static  'reserva/img/abajo.png' %}">
+      </div>
+    </div>
+  </div>
+  
+</div>
+
+{% endblock %}

@@ -7,5 +7,6 @@ urlpatterns = [
     #el segundo parámetro es el views al que le hace referencia 
     path('login/', login, name="login"),
     path('receta/', receta, name="receta"),
-    path('enviar_receta/', enviar_receta, name="enviar_receta"),
+    path('crear_receta/', crear_receta, name="crear_receta"),
+    path('finalizar_receta/', finalizar_receta, name="finalizar_receta"),
 ]

@@ -64,8 +64,8 @@ class Receta(models.Model): #Esta tabla contiene la receta que es entregada por 
         return idShow
 
 class DetalleReceta(models.Model):
-    idreceta = models.ForeingKey(Receta, on_delete=models.RESTRICT, primary_key=True)
-    codmed = models.ForeingKey(Medicamento, on_delete=models.RESTRICT)
+    idreceta = models.ForeignKey(Receta, on_delete=models.RESTRICT, primary_key=True)
+    codmed = models.ForeignKey(Medicamento, on_delete=models.RESTRICT)
     cantidad = models.IntegerField(verbose_name="Cantidad del Medicamento") #cantidad del medicamento ingresado en la receta
 
     def __str__(self):

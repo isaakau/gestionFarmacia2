@@ -3,66 +3,73 @@ from django.contrib.auth.models import User
 import datetime
 
 class Laboratorio(models.Model): #tabla que contiene los laboratorios fabricantes de medicamentos
-    idLab = models.AutoField(primary_key=True) #id del laboratorio, es un autoincremental clave primaria que se utiliza en la tabla medicamento
-    nombreLab = models.CharField(max_length=25) #nombre del laboratorio, para detalle
+    idLab = models.AutoField(primary_key=True, verbose_name="Id del laboratorio (uso interno)") #id del laboratorio, es un autoincremental clave primaria que se utiliza en la tabla medicamento
+    nombreLab = models.CharField(max_length=25, verbose_name="Nombre del Laboratorio") #nombre del laboratorio, para detalle
 
     def __str__(self):
         return self.nombreLab
 
 class Formato(models.Model): #esta tabla contiene el formato en el que viene el medicamento
-    idFormato = models.AutoField(primary_key=True) #id autoincremental, clave primaria que se utiliza en la tabla medicamento
-    nombreFormato = models.CharField(max_length=25)#nombre del formato, por ejemplo cápsula, jarabe, gotas, etc
+    idFormato = models.AutoField(primary_key=True, verbose_name="Id del Formato (uso interno)") #id autoincremental, clave primaria que se utiliza en la tabla medicamento
+    nombreFormato = models.CharField(max_length=25, verbose_name="Formato del Medicamento")#nombre del formato, por ejemplo cápsula, jarabe, gotas, etc
     
     def __str__(self):
         return self.nombreFormato
 
 class Categoria(models.Model):
-    idCategoria = models.AutoField(primary_key=True)
-    nombreCat = models.CharField(max_length=40)
-    descripcion = models.CharField(max_length=200)
+    idCategoria = models.AutoField(primary_key=True, verbose_name="ID de la Categoría (uso interno)")
+    nombreCat = models.CharField(max_length=40, verbose_name="Nombre de la Categoría")
+    descripcion = models.CharField(max_length=200, verbose_name="Descripción de la Categoría")
 
     def __str__(self):
         return self.nombreCat
 
     
 class Medicamento(models.Model): #esta tabla guarda la información relacionada al medicamento
-    codigo = models.AutoField(primary_key=True) #codigo asignado de acuerdo a control interno, es clave primaria
-    nombreMed = models.CharField(max_length=25) #es el nombre comercial del medicamento
-    principio = models.CharField(max_length=40) #el principio activo del medicamento
+    codigo = models.AutoField(primary_key=True, verbose_name="Código del Medicamento") #codigo asignado de acuerdo a control interno, es clave primaria
+    nombreMed = models.CharField(max_length=25, verbose_name="Nombre del Medicamento") #es el nombre comercial del medicamento
+    principio = models.CharField(max_length=40, verbose_name="Principio Activo") #el principio activo del medicamento
     categoria = models.ForeignKey(Categoria, on_delete=models.RESTRICT, default=0)
     laboratorio = models.ForeignKey(Laboratorio, on_delete=models.RESTRICT) #laboratorio que lo fabrica, se obtiene de la tabla Laboratorio
     formato = models.ForeignKey(Formato, on_delete=models.RESTRICT) #el formato de venta del medicamento, se obtiene de la tabla Formato
-    stock = models.IntegerField() #la cantidad que hay en existencias del medicamento
-    vencimiento = models.DateField() #la fecha de vencimiento indicada por el fabricante
-    reservado = models.IntegerField(default=0) #en esta variable se guarda la cantidad de medicamentos reservados
+    stock = models.IntegerField(verbose_name="Stock del Medicamento") #la cantidad que hay en existencias del medicamento
+    vencimiento = models.DateField(verbose_name="Fecha de Vencimiento") #la fecha de vencimiento indicada por el fabricante
+    reservado = models.IntegerField(default=0, verbose_name="Cantidad Reservada") #en esta variable se guarda la cantidad de medicamentos reservados
 
     def __str__(self):
         return self.nombreMed
 
 class Paciente(models.Model):
-    rutPaciente = models.CharField(primary_key=True, max_length=10)
-    nombresPac = models.CharField(max_length=40)
-    apellidosPac = models.CharField(max_length=40)
-    telefonoPac = models.IntegerField() #el telefono del paciente para enviar whatsapp
-    correoPac = models.CharField(max_length=60) #el correo del paciente para enviar mensaje
+    rutPaciente = models.CharField(primary_key=True, max_length=10, verbose_name="Rut del Paciente")
+    nombresPac = models.CharField(max_length=40, verbose_name="Nombres del Paciente")
+    apellidosPac = models.CharField(max_length=40, verbose_name="Apellidos del Paciente")
+    telefonoPac = models.IntegerField(verbose_name="Celular del Paciente") #el telefono del paciente para enviar whatsapp
+    correoPac = models.CharField(max_length=60, verbose_name="Correo electrónico del Paciente") #el correo del paciente para enviar mensaje
 
     def __str__(self):
         return self.nombresPac +(" ")+ self.apellidosPac
 
 class Receta(models.Model): #Esta tabla contiene la receta que es entregada por el médico para uso interno en farmacia
-    idReceta = models.AutoField(primary_key=True) #id autoincremental que es clave primaria, para control interno
-    medicamento = models.ManyToManyField(Medicamento)
-    fechaReceta = models.DateTimeField(auto_now_add=True) #se añade automaticamente la fecha en que se ingreso la receta
+    idReceta = models.AutoField(primary_key=True, verbose_name="Id de la Receta (uso interno)") #id autoincremental que es clave primaria, para control interno
+    #medicamento = models.ManyToManyField(Medicamento) #este se sacaría porque iría en la entidad de abajo
+    fechaReceta = models.DateTimeField(auto_now_add=True, verbose_name="Fecha de Emisión") #se añade automaticamente la fecha en que se ingreso la receta
     rutPaciente = models.ForeignKey(Paciente, on_delete=models.RESTRICT) #es el rut del paciente al cual se le hace la receta
     rutMed = models.ForeignKey(User, on_delete=models.RESTRICT) #el rut del médico que receta la orden, se obtiene de la tabla Usuario
-    observacion = models.CharField(max_length=200) #una observación adicional del médico en caso de ser necesaria, o un detalle de la toma de medicamentos
-    rutReceptor = models.CharField(editable=False, default=0, max_length=10)
-    entregada = models.BooleanField()
+    observacion = models.CharField(max_length=200, verbose_name="Observación del Médico") #una observación adicional del médico en caso de ser necesaria, o un detalle de la toma de medicamentos
+    rutReceptor = models.CharField(editable=False, default=0, max_length=10, verbose_name="Rut del que Retira")
+    entregada = models.BooleanField(verbose_name="Receta Entregada")
 
     def __str__(self):
         idShow = str(self.fechaReceta) + (" ") + str(self.rutPaciente)
         return idShow
 
+class DetalleReceta(models.Model):
+    #recetaMed = models.ForeignKey(Receta, on_delete=models.RESTRICT)+models.ForeignKey(Medicamento, on_delete=models.RESTRICT) #hay que probar si se puede,
+    #aunque no tomaría esa como clave primaria, sino que generaría un autoincremental,
+    #sino, hacerlo asi:
+    idreceta = models.ForeingKey(Receta, on_delete=models.RESTRICT, primary_key=True)
+    codmed = models.ForeingKey(Medicamento, on_delete=models.RESTRICT)
+    cantidad = models.IntegerField(verbose_name="Cantidad del Medicamento") #cantidad del medicamento ingresado en la receta
 
 
 

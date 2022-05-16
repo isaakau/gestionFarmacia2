@@ -8,3 +8,11 @@ def home(request):
 #esto quiere decir que cuando la url de la pagina no tenga nada después del /, nos redirecciona a esta pagina home
 def login(request):
     return render(request, 'reserva/login.html') 
+
+def receta(request):
+    context = {}
+    return render(request, 'reserva/receta.html', context) 
+
+def enviar_receta(request):
+    context = {}
+    return render(request, 'reserva/enviar_receta.html', context) 

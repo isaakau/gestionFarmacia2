@@ -64,12 +64,13 @@ class Receta(models.Model): #Esta tabla contiene la receta que es entregada por 
         return idShow
 
 class DetalleReceta(models.Model):
-    #recetaMed = models.ForeignKey(Receta, on_delete=models.RESTRICT)+models.ForeignKey(Medicamento, on_delete=models.RESTRICT) #hay que probar si se puede,
-    #aunque no tomaría esa como clave primaria, sino que generaría un autoincremental,
-    #sino, hacerlo asi:
     idreceta = models.ForeingKey(Receta, on_delete=models.RESTRICT, primary_key=True)
     codmed = models.ForeingKey(Medicamento, on_delete=models.RESTRICT)
     cantidad = models.IntegerField(verbose_name="Cantidad del Medicamento") #cantidad del medicamento ingresado en la receta
+
+    def __str__(self):
+        detalle = "receta_n" + str(self.idreceta)+"medicamento_"+str(self.codmed)
+        return detalle
 
 
 

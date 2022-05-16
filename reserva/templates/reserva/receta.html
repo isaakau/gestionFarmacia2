@@ -1,13 +1,65 @@
-{% extends 'reserva/base.html' %}
-{% load static %}
+{% extends 'reserva/base.html' %} <!-- con este código se conecta al base.html -->
+{% load static %} <!--con este código traemos todos las imagenes css y js de la carpeta static-->
 
-{% block content %}
-       
-  <div class="container w-75 bg-light mt-5 rounded shadow" >
-      <div class="row pb-5 align-items-stretch">
-        RECETA
-
-      </div>
+{% block content %} <!--aquí comienza el bloque de código nuevo-->
+<body>   
+  RECETA
+  <!-- la ide acá es traer todos los medicamentos de la base de datos y dentro de eso aplicar filtros -->
+  <!-- <div class="container w-75 bg-light mt-5 rounded shadow" >
+    <div class="row pb-5 align-items-stretch"> -->
+  <div class="d-flex container">
+    <div class="row">
+      <!-- {% for pro in productos%} -->
+      <!-- {% endfor %}  -->
+        <div class="col-sm-3">
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title "><strong>Metoformina</strong></h5>
+              <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+              <button type="button" class="btn btn-outline-success">Agregar a receta</button>
+              <a href="#" type="button" class="btn btn-outline-primary">Detalle</a>
+              <h4 style="display: inline-block; float: right;">10</h4>
+            </div>
+          </div>
+        </div>
+      
+        <div class="col-sm-3">
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title "><strong>Losartan</strong></h5>
+              <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+              <button type="button" class="btn btn-outline-success">Agregar a receta</button>
+              <a href="#" type="button" class="btn btn-outline-primary">Detalle</a>
+              <h4 style="display: inline-block; float: right;">10</h4>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-3">
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title "><strong>Paracetamol</strong></h5>
+              <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+              <button type="button" class="btn btn-outline-success">Agregar a receta</button>
+              <a href="#" type="button" class="btn btn-outline-primary">Detalle</a>
+              <h4 style="display: inline-block; float: right;">10</h4>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-3">
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title "><strong>Levorigotax</strong></h5>
+              <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+              <button type="button" class="btn btn-outline-success">Agregar a receta</button>
+              <a href="#" type="button" class="btn btn-outline-primary">Detalle</a>
+              <h4 style="display: inline-block; float: right;">10</h4>
+            </div>
+          </div>
+        </div>
+    
+    </div>
   </div>
+    
+</body> 
 
-{% endblock %}
+{% endblock %} <!--aquí termina el bloque de código nuuevo -->

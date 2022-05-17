@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from .models import *
-from django.http import HttpResponse
+from .forms import MedicamentoForm
 # Aquí es donde declaramos nuestras vistas personalizadas, a partir de los html que tenemos en la carpeta templates
 #en el codigo de abajo solo se pone reserva porque la función busca automáticamente la carpeta templates
 def home(request):
@@ -16,7 +16,11 @@ def gestion_medicamentos(request):
     return render(request, 'reserva/VerMedicamentos.html', context)
 
 def crear_medicamento(request):
-    return render(request, 'reserva/agregarMedicamentos.html')
+
+    data = {
+        'form': MedicamentoForm()
+    }
+    return render(request, 'reserva/agregarMedicamentos.html', data)
 
 #def modificar_medicamento(request, id):
 

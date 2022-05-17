@@ -1,4 +1,5 @@
 from django.db import models
+from twilio.rest import Client
 from django.contrib.auth.models import User
 import datetime
 
@@ -37,6 +38,22 @@ class Medicamento(models.Model): #esta tabla guarda la información relacionada 
 
     def __str__(self):
         return self.nombreMed
+
+    # Enviar SMS
+    def save(self, *args, **kwargs):
+        if self.stock > 1:
+            account_sid = 'AC1885cb5b3177c0f725227c2d48b75f1f'
+            auth_token = 'ea4748b418d6a22f128a20f14a40822e'
+            client = Client(account_sid, auth_token)
+
+            message = client.messages.create(
+                                        body='Retiro de medicamentos disponible. Acerquese a su CESFAM para la entrega.',
+                                        from_='+19207686157',
+                                        to='+56952150301'
+                                    )
+
+            print(message.sid)
+        return super().save(*args, **kwargs)
 
 class Paciente(models.Model):
     rutPaciente = models.CharField(primary_key=True, max_length=10, verbose_name="Rut del Paciente")
@@ -80,5 +97,6 @@ class Reserva(models.Model):
 
     def __str__(self):
         return self.idReserva
+
 
 

@@ -9,4 +9,5 @@ urlpatterns = [
     path('receta/', receta, name="receta"),
     path('crear_receta/', crear_receta, name="crear_receta"),
     path('finalizar_receta/', finalizar_receta, name="finalizar_receta"),
+    path('enviar_correo/', enviar_correo, name="enviar_correo"),
 ]

@@ -15,13 +15,13 @@ def receta(request):
     return render(request, 'reserva/receta.html', context) 
 
 def crear_receta(request):
-    # if request.user.is_authenticated:
-    #     # medico = request.user.User
-    #     receta, created = Receta.objects.get_or_create(entregada=False)
-    #     medicamentos = receta.receta_set.all()
-    # else:
-    #     medicamentos = []
-    context = {}
+    if request.user.is_authenticated:
+        receta, created = Receta.objects.get_or_create(entregada=False)
+        listaMeds = receta.detallereceta_set.all()
+    else:
+        listaMeds = []
+        receta = {'get_meds_total':0}
+    context = {'listaMeds':listaMeds}
     return render(request, 'reserva/crear_receta.html', context) 
 
 def finalizar_receta(request):

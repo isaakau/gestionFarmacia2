@@ -71,6 +71,7 @@ class DetalleReceta(models.Model):
         detalle = "receta_n" + str(self.idReceta)+"medicamento_"+str(self.codmed)
         return detalle
 
+
 class Reserva(models.Model):
     idReserva = models.AutoField(primary_key=True)
     idDetalle = models.ForeignKey(DetalleReceta, on_delete=models.RESTRICT)

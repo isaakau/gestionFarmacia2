@@ -39,12 +39,13 @@
 				<hr>
 				<h3>Receta</h3>
 				<hr>
-				<div class="cart-row">
-					<div style="flex:1"><p>Metformina</p></div>
-					<div style="flex:2"><p>Metformina Clorhidrato 500mg</p></div>
-					<div style="flex:1"><p>2</p></div>
-				</div>
-				<h5>Items:   2</h5>
+				{% for med in listaMeds %}
+					<div class="cart-row">
+						<div style="flex:1"><p>{{med.codmed.nombreMed}}</p></div>
+						<div style="flex:2"><p>{{med.codmed.principio}}</p></div>
+						<div style="flex:1"><p>{{med.cantidad}}</p></div>
+					</div>
+				{% endfor %}
 			</div>
 		</div>
 

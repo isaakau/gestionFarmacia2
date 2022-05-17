@@ -2,7 +2,8 @@
 
 <!doctype html>
 <html lang="es">
-  <head>
+
+<head>
     <title>Gestor Farmacia</title>
     <link rel="shortcut icon" href="{%static 'reserva/img/favicon.ico' %}" type="image/x-icon">
     <!-- Required meta tags -->
@@ -10,81 +11,69 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <!-- Bootstrap CSS v5.0.2 -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"  integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <link type="text/css" rel="stylesheet" href="{% static 'reserva/css/style.css'%}">
-  </head>
+</head>
 
-    <nav class="navbar navbar-expand-md navbar-light bg-light rounded shadow">
-        <div class="container">
-            <a 
-                href="{% url 'home' %}" 
-                class="navbar-brand">
-                <img 
-                class="d-inline-block align-self-center"
-                src="{% static 'reserva/img/cesfam-logo.png' %}" width="180" height="100">
-                
-            </a>
-            <button 
-            type="button"
-            data-bs-toggle="collapse"
-            data-bs-target="#navbarNav"
-            class="navbar-toggler"
+<nav class="navbar navbar-expand-md navbar-light bg-light rounded shadow">
+    <div class="container">
+        <a href="{% url 'home' %}" class="navbar-brand">
+            <img class="d-inline-block align-self-center" src="{% static 'reserva/img/cesfam-logo.png' %}" width="180" height="100">
 
-            aria-expanded="false"
-            aria-label="Toggle navigation">
+        </a>
+        <button type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" class="navbar-toggler" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
             </button>
-            <div class="collapse navbar-collapse d-flex" id="navbarNAV">
-                <ul class="navbar-nav">
-                    <li class="nav-item active">
-                        <a href="{% url 'home' %}" class="nav-link">
+        <div class="collapse navbar-collapse d-flex" id="navbarNAV">
+            <ul class="navbar-nav">
+                <li class="nav-item active">
+                    <a href="{% url 'home' %}" class="nav-link">
                             Inicio
                         </a>
-                    </li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                         Farmacia
                         </a>
-                        <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                        <li><a class="dropdown-item" href="agregarMedicamentos.html">Agregar Medicamentos</a></li>
-                        <li><a class="dropdown-item" href="VerMedicamentos.html">Consulta Medicamentos</a></li>
-                        </ul>
-                    </li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                        <li><a class="dropdown-item" href="{% url 'crear_medicamento' %}">Agregar Medicamentos</a></li>
+                        <li><a class="dropdown-item" href="{% url 'gestion_medicamentos' %}">Consulta Medicamentos</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                         Perfiles
                         </a>
-                        <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                         <li><a class="dropdown-item" href="Usuarios.html">Añadir Usuario</a></li>
                         <li><a class="dropdown-item" href="modperfiles.html">Modificar Usuario</a></li>
-                        </ul>
-                    </li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    </ul>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                         Pacientes
                         </a>
-                        <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                         <li><a class="dropdown-item" href="pacientes.html">Ver Pacientes</a></li>
                         <li><a class="dropdown-item" href="verpacientes.html">Consulta Pacientes</a></li>
-                        </ul>
-                    </li>
-                </ul>
-            </div>
-            <div class="d-flex justify-content-end">
-                <div class="form-inline my-2 my-lg-0">
-                    <a href="#"class="btn btn-success">Login</a>
-                    <a href="{% url 'crear_receta' %}">
-                       <img  id="cart-icon" src="{% static 'reserva/img/receta.png' %}">
-                   </a>
-               </div>
-               <p id="cart-total">0</p>
-            </div>
+                    </ul>
+                </li>
+            </ul>
         </div>
-    </nav>
-        <!-- Navbar end -->
-    {% block content %}
+        <div class="d-flex justify-content-end">
+            <div class="form-inline my-2 my-lg-0">
+                <a href="#" class="btn btn-success">Login</a>
+                <a href="{% url 'crear_receta' %}">
+                    <img id="cart-icon" src="{% static 'reserva/img/receta.png' %}">
+                </a>
+            </div>
+            <p id="cart-total">0</p>
+        </div>
+    </div>
+</nav>
+<!-- Navbar end -->
+{% block content %} {% endblock %}
 
-    {% endblock %}
 </html>
 
 <!-- Bootstrap JavaScript Libraries -->

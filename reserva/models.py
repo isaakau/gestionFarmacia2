@@ -36,7 +36,7 @@ class Medicamento(models.Model): #esta tabla guarda la información relacionada 
     vencimiento = models.DateField(verbose_name="Fecha de Vencimiento") #la fecha de vencimiento indicada por el fabricante
 
     def __str__(self):
-        return self.nombreMed
+        return str(self.codigo)
 
 class Paciente(models.Model):
     rutPaciente = models.CharField(primary_key=True, max_length=10, verbose_name="Rut del Paciente")

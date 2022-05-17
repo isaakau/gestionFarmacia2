@@ -17,7 +17,7 @@
                         {% csrf_token %} {{ form | crispy }}
 
                         <div class="d-flex justify-content-end">
-                            <input type="reset" value="Cancelar" class="btn btn-outline-danger">
+                            <a type="reset" href="{% url 'gestion_medicamentos' %}" class="btn btn-outline-danger">Cancelar</a>
                             <input type="submit" value="Guardar" class="btn btn-outline-success">
                         </div>
 

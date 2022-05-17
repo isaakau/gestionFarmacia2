@@ -60,16 +60,16 @@ class Receta(models.Model): #Esta tabla contiene la receta que es entregada por 
     entregada = models.BooleanField(verbose_name="Receta Entregada")
 
     def __str__(self):
-        idShow = str(self.fechaReceta) + (" ") + str(self.rutPaciente)
-        return idShow
+        return str(self.idReceta)
 
 class DetalleReceta(models.Model):
-    idreceta = models.ForeignKey(Receta, on_delete=models.RESTRICT, primary_key=True)
+    idDetalle = models.AutoField(primary_key=True)
+    idReceta = models.ForeignKey(Receta, on_delete=models.RESTRICT)
     codmed = models.ForeignKey(Medicamento, on_delete=models.RESTRICT)
     cantidad = models.IntegerField(verbose_name="Cantidad del Medicamento") #cantidad del medicamento ingresado en la receta
 
     def __str__(self):
-        detalle = "receta_n" + str(self.idreceta)+"medicamento_"+str(self.codmed)
+        detalle = "receta_n" + str(self.idReceta)+"medicamento_"+str(self.codmed)
         return detalle
 
 

@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect, get_object_or_404
 from .models import *
 from .forms import MedicamentoForm
 # Aquí es donde declaramos nuestras vistas personalizadas, a partir de los html que tenemos en la carpeta templates
@@ -20,9 +20,34 @@ def crear_medicamento(request):
     data = {
         'form': MedicamentoForm()
     }
+    
+    if request.method == 'POST':
+        formulario = MedicamentoForm(data=request.POST)
+        if formulario.is_valid():
+            formulario.save()
+            data["mensaje"] = "Guardado exitosamente"
+        else:
+            data["form"] = Medicamento
+    
     return render(request, 'reserva/agregarMedicamentos.html', data)
+    
 
-#def modificar_medicamento(request, id):
+def modificar_medicamento(request, codigo):
+    medicamento = get_object_or_404(Medicamento, codigo=codigo)
+    
+    data = {
+        'form': MedicamentoForm(instance=medicamento)
+    }
+
+    if request.method == 'POST':
+        formulario = MedicamentoForm(data=request.POST)
+        if formulario.is_valid():
+            formulario.save()
+            data["mensaje"] = "Modificado exitosamente"
+            return redirect(to="gestion_medicamentos")
+        data["form"] = formulario
+
+    return render(request, 'reserva/modificarMedicamento.html')
 
 def receta(request):
     meds = Medicamento.objects.all()

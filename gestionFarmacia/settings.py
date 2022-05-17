@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'reserva', #agregamos la aplicación creada con python manage.py reserva
+    'crispy_forms',
 ]
 
 MIDDLEWARE = [

@@ -3,23 +3,28 @@
 {% load static %}
 <!--con este código traemos todos las imagenes css y js de la carpeta static-->
 
-{% block content %}
+{% block content %} {% load crispy_forms_tags %}
 
 <body>
-    <div class="card">
-        <div class="card-body">
 
-            <form action="" method="post">
+    <div class="row">
+        <div class="col-12 col-md-6 offset-md-3">
+            <div class="card">
+                <div class="card-body">
+                    <h2>Agregar Medicamento</h2>
+                    <form action="" method="post">
 
-                {% csrf_token %} {{ form }}
+                        {% csrf_token %} {{ form | crispy }}
 
-                <div class="d-flex justify-content-center">
-                    <input type="reset" value="Cancelar" class="btn btn-outline-danger">
-                    <input type="submit" value="Guardar" class="btn btn-outline-success">
+                        <div class="d-flex justify-content-end">
+                            <input type="reset" value="Cancelar" class="btn btn-outline-danger">
+                            <input type="submit" value="Guardar" class="btn btn-outline-success">
+                        </div>
 
+                    </form>
+                    {{ mensaje }}
                 </div>
-
-            </form>
+            </div>
 
         </div>
     </div>

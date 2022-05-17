@@ -31,38 +31,37 @@
                             Inicio
                         </a>
                 </li>
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        Farmacia
-                        </a>
-                    <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                        <li><a class="dropdown-item" href="{% url 'crear_medicamento' %}">Agregar Medicamentos</a></li>
-                        <li><a class="dropdown-item" href="{% url 'gestion_medicamentos' %}">Consulta Medicamentos</a></li>
-                    </ul>
+                {% if user.is_authenticated %} {% if perms.reserva.add_medicamento %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'gestion_medicamentos' %}" role="button">
+                            Gestión Medicamentos
+                            </a>
                 </li>
+                {% endif %} {% if perms.reserva.add_receta %}
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        Perfiles
-                        </a>
-                    <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                        <li><a class="dropdown-item" href="Usuarios.html">Añadir Usuario</a></li>
-                        <li><a class="dropdown-item" href="modperfiles.html">Modificar Usuario</a></li>
-                    </ul>
+                    <a class="nav-link" href="{% url 'crear_receta' %}" role="button">
+                            Gestión Recetas
+                            </a>
                 </li>
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        Pacientes
-                        </a>
-                    <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                        <li><a class="dropdown-item" href="pacientes.html">Ver Pacientes</a></li>
-                        <li><a class="dropdown-item" href="verpacientes.html">Consulta Pacientes</a></li>
-                    </ul>
-                </li>
+                {% endif %} {% endif %}
+
+
             </ul>
         </div>
         <div class="d-flex justify-content-end">
             <div class="form-inline my-2 my-lg-0">
-                <a href="#" class="btn btn-success">Login</a>
+                {% if user.is_authenticated %}
+                <li>
+                    <a>Bienvenido, </a>
+                    <a href="#">{{ user.username }}</a>
+                    <a class="btn btn-danger" href="{% url 'logout' %}">Cerrar Sesión</a>
+                </li>
+                {% else %}
+                <li>
+                    <a class="btn btn-success" href="{% url 'login' %}">Iniciar Sesión</a>
+                </li>
+                {% endif %}
+
                 <a href="{% url 'crear_receta' %}">
                     <img id="cart-icon" src="{% static 'reserva/img/receta.png' %}">
                 </a>

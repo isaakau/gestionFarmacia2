@@ -1,6 +1,5 @@
 from django.db import models
 from django.contrib.auth.models import User
-import datetime
 
 class Laboratorio(models.Model): #tabla que contiene los laboratorios fabricantes de medicamentos
     idLab = models.AutoField(primary_key=True, verbose_name="Id del laboratorio (uso interno)") #id del laboratorio, es un autoincremental clave primaria que se utiliza en la tabla medicamento

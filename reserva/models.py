@@ -34,7 +34,6 @@ class Medicamento(models.Model): #esta tabla guarda la información relacionada 
     formato = models.ForeignKey(Formato, on_delete=models.RESTRICT) #el formato de venta del medicamento, se obtiene de la tabla Formato
     stock = models.IntegerField(verbose_name="Stock del Medicamento") #la cantidad que hay en existencias del medicamento
     vencimiento = models.DateField(verbose_name="Fecha de Vencimiento") #la fecha de vencimiento indicada por el fabricante
-    reservado = models.IntegerField(default=0, verbose_name="Cantidad Reservada") #en esta variable se guarda la cantidad de medicamentos reservados
 
     def __str__(self):
         return self.nombreMed
@@ -72,5 +71,14 @@ class DetalleReceta(models.Model):
         detalle = "receta_n" + str(self.idReceta)+"medicamento_"+str(self.codmed)
         return detalle
 
+class Reserva(models.Model):
+    idReserva = models.AutoField(primary_key=True)
+    idDetalle = models.ForeignKey(DetalleReceta, on_delete=models.RESTRICT)
+    codMed = models.ForeignKey(Medicamento, on_delete=models.RESTRICT)
+    rutPaciente = models.ForeignKey(Paciente, on_delete=models.RESTRICT)
+    cantidadReservada = models.IntegerField()
+
+    def __str__(self):
+        return self.idReserva
 
 

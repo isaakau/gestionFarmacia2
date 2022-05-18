@@ -73,6 +73,10 @@ def modificar_medicamento(request, codigo):
 
     return render(request, 'reserva/modificarMedicamento.html', data)
 
+def listar_recetas(request):
+    recetas = Receta.objects.all()
+    context = {'recetas':recetas}
+    return render(request, 'reserva/listarRecetas.html', context)
 
 def receta(request):
     meds = Medicamento.objects.all()

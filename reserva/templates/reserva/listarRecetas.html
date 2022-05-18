@@ -1,0 +1,33 @@
+{% extends 'reserva/base.html' %}
+<!-- con este código se conecta al base.html -->
+{% load static %}
+<!--con este código traemos todos las imagenes css y js de la carpeta static-->
+
+{% block content %}
+
+
+<body>
+    <div class="text-center">
+        <h2>Gestión de Recetas</h2>
+        <a type="button" class="btn btn-outline-primary" href="{% url 'crear_receta' %}">Nueva Receta</a>
+    </div>
+    <div class="d-flex container">
+        <div class="row">
+            {% for re in recetas %}
+            <div class="col-sm-3 mt-3">
+                <div class="card" style="width: 25rem;">
+                    <div class="card-body">
+                        <h5 class="card-title"><strong>Receta: {{re.idReceta}}</strong></h5>
+                        <p class="card-text">Fecha de ingreso: {{re.fechaReceta}}</p>
+                        <p class="card-text">Rut del Paciente: {{rutPaciente}}</p>
+                        <p class="card-text">Observación: {{re.observacion}}</p>
+                        <!--<button type="button" class="btn btn-outline-danger">Vencer</button>-->
+                    </div>
+                </div>
+            </div>
+
+            {% endfor %}
+        </div>
+    </div>
+</body>
+{% endblock %}

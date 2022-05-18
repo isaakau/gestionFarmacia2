@@ -5,6 +5,9 @@ from django.shortcuts import render, redirect, get_object_or_404
 from .models import *
 from .forms import *
 from django.contrib.auth.decorators import login_required, permission_required
+from sms import send_sms
+
+
 
 # Aquí es donde declaramos nuestras vistas personalizadas, a partir de los html que tenemos en la carpeta templates
 #en el codigo de abajo solo se pone reserva porque la función busca automáticamente la carpeta templates
@@ -57,7 +60,12 @@ def modificar_medicamento(request, codigo):
             #esto es para probar que detecta los cambios de stock
             if int(nuevoStock)>int(antiguoStock): #aca se evalua si el stock nuevo es mayor respecto al antiguo, osea si se repuso stock de un medicamento
                 #esta es la logica basa que se debe usar para lo de las reservas
-                print("Se aumentó el stock")
+                print("el stock aumento")
+                send_sms(
+                    'el stock aumento de '+str(antiguoStock)+'a '+str(nuevoStock)+'. Listo para retirar el medicamento: '+meds.nombreMed,
+                    ['+56963760132'],
+                    fail_silently=False
+                    )
             else:
                 print("Se disminuyó el stock")
             #     reservados = 0

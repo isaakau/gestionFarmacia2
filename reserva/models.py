@@ -93,6 +93,8 @@ class Reserva(models.Model):
     idDetalle = models.ForeignKey(DetalleReceta, on_delete=models.RESTRICT)
     codMed = models.ForeignKey(Medicamento, on_delete=models.RESTRICT)
     rutPaciente = models.ForeignKey(Paciente, on_delete=models.RESTRICT)
+    correoPac = models.CharField(max_length=100)
+    telefonoPac = models.IntegerField()
     cantidadReservada = models.IntegerField()
 
     def __str__(self):

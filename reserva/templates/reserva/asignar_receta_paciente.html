@@ -1,0 +1,28 @@
+{% extends 'reserva/base.html' %}
+<!-- con este código se conecta al base.html -->
+{% load static %}
+<!--con este código traemos todos las imagenes css y js de la carpeta static-->
+
+{% block content %} {% load crispy_forms_tags %}
+
+
+<body>
+    <div class="card">
+        <div class="card-body">
+            <h2>Asignar Receta a Paciente
+            </h2>
+            <form action="" method="post">
+
+                {% csrf_token %} {{ form | crispy }}
+
+                <div class="d-flex justify-content-end">
+                    <a type="reset" href="{% url 'crear_receta2' %}" class="btn btn-outline-danger">Cancelar</a>
+                    <input type="submit" value="Guardar" class="btn btn-outline-success">
+                </div>
+
+            </form>
+
+        </div>
+    </div>
+</body>
+{% endblock %}

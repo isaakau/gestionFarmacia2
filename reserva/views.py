@@ -75,7 +75,7 @@ def modificar_medicamento(request, codigo):
             data["form"] = form
 
     return render(request, 'reserva/modificarMedicamento.html', data)
-
+@permission_required('reserva.view_receta')
 def listar_recetas(request):
     recetas = Receta.objects.all()
     context = {'recetas':recetas}
@@ -89,17 +89,16 @@ def receta(request):
 @permission_required('reserva.add_receta')
 def crear_receta(request):
     if request.user.is_authenticated:
-        receta, created = Receta.objects.get_or_create(entregada=False)
+        receta, created = Receta.objects.filter(entregada=False)
         listaMeds = receta.detallereceta_set.all()
     else:
         listaMeds = []
-        receta = {'get_meds_total':0}
     context = {'listaMeds':listaMeds}
     return render(request, 'reserva/crear_receta.html', context) 
 
 def finalizar_receta(request):
     if request.user.is_authenticated:
-        receta, created = Receta.objects.get_or_create(entregada=False)
+        receta, created = Receta.objects.filter(entregada=False)
         listaMeds = receta.detallereceta_set.all()
     else:
         listaMeds = []

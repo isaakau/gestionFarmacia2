@@ -1,6 +1,5 @@
 from django.db import models
 from django.contrib.auth.models import User
-import datetime
 
 class Laboratorio(models.Model): #tabla que contiene los laboratorios fabricantes de medicamentos
     idLab = models.AutoField(primary_key=True, verbose_name="Id del laboratorio (uso interno)") #id del laboratorio, es un autoincremental clave primaria que se utiliza en la tabla medicamento
@@ -36,7 +35,7 @@ class Medicamento(models.Model): #esta tabla guarda la información relacionada 
     vencimiento = models.DateField(verbose_name="Fecha de Vencimiento") #la fecha de vencimiento indicada por el fabricante
 
     def __str__(self):
-        return self.nombreMed
+        return str(self.codigo)
 
 class Paciente(models.Model):
     rutPaciente = models.CharField(primary_key=True, max_length=10, verbose_name="Rut del Paciente")

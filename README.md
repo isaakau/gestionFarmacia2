@@ -48,4 +48,8 @@ tablas que creamos. Para que se muestren debemos escribir otra linea debajo que 
 correctas.
 
 
-
+Usuarios para probar los correos
+1. admin admin -> envia correo a Isabella
+2. paty paty1234
+3. mrcutux cutu1234
+4. fisko francisco1234

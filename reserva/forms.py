@@ -10,3 +10,12 @@ class MedicamentoForm(forms.ModelForm):
             "vencimiento": forms.SelectDateWidget()
         }
 
+class RecetaForm(forms.ModelForm):
+    class Meta:
+        model = Receta
+        fields = '__all__'
+
+        widgets = {
+            #"vencimiento": forms.SelectDateWidget()
+        }
+

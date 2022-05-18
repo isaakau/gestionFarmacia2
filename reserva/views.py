@@ -1,3 +1,4 @@
+from venv import create
 from django.conf import settings
 from django.template.loader import get_template
 from django.core.mail import EmailMultiAlternatives
@@ -6,6 +7,9 @@ from .models import *
 from .forms import *
 from django.contrib.auth.decorators import login_required, permission_required
 from django.contrib.auth.models import User
+from django.http import JsonResponse
+from django.views.decorators.csrf import csrf_exempt
+import json
 
 # Aquí es donde declaramos nuestras vistas personalizadas, a partir de los html que tenemos en la carpeta templates
 #en el codigo de abajo solo se pone reserva porque la función busca automáticamente la carpeta templates
@@ -81,36 +85,83 @@ def modificar_medicamento(request, codigo):
             data["form"] = form
 
     return render(request, 'reserva/modificarMedicamento.html', data)
+
 @permission_required('reserva.view_receta')
 def listar_recetas(request):
-    recetas = Receta.objects.all()
+    recetas = Receta.objects.all() #debería traer sólo las que no estan entregadas
     context = {'recetas':recetas}
     return render(request, 'reserva/listarRecetas.html', context)
 
-def receta(request):
+from django.views.decorators.csrf import csrf_exempt
+
+#Para crear una nueva receta
+def agregar_receta(request):
+    # meds = Medicamento.objects.all()
+    data = {
+        'form': RecetaForm()
+    }
+    #aca verifica que si el metodo es post, revisa que el formulario este valido y lo guarda, enviando un mensaje que se refleja abajo de la pantalla
+    if request.method == 'POST':
+        form = RecetaForm(data=request.POST)
+        if form.is_valid():
+            form.save()
+            data["mensaje"] = "Guardado exitosamente"
+        else:
+            data["form"] = form
+    
+    return render(request, 'reserva/agregar_receta.html', data)
+    
+@csrf_exempt
+#muestra todos los medicamentos con su stock actual.
+def receta(request, idReceta):
     meds = Medicamento.objects.all()
-    context = {'meds':meds}
+    recetas = Receta.objects.all()
+    receta = Receta.objects.get(idReceta = idReceta)
+    detalle, created = DetalleReceta.objects.filter(idReceta = idReceta)
+    listaMeds = receta.detallereceta_set.all()
+    # listaMeds = DetalleReceta.objects.filter(idreceta = idreceta)
+    print('****************',listaMeds)
+    context = {'meds':meds, 'listaMeds' :listaMeds, 'recetas':recetas}
     return render(request, 'reserva/receta.html', context) 
 
-@permission_required('reserva.add_receta')
-def crear_receta(request):
-    if request.user.is_authenticated:
-        receta, created = Receta.objects.filter(entregada=False)
-        listaMeds = receta.detallereceta_set.all()
-    else:
-        listaMeds = []
-    context = {'listaMeds':listaMeds}
-    return render(request, 'reserva/crear_receta.html', context) 
 
-def finalizar_receta(request):
-    if request.user.is_authenticated:
-        receta, created = Receta.objects.filter(entregada=False)
-        listaMeds = receta.detallereceta_set.all()
-    else:
-        listaMeds = []
-        receta = {'get_meds_total':0}
-    context = {'listaMeds':listaMeds}
-    return render(request, 'reserva/finalizar_receta.html', context) 
+
+def updateMed(request):
+    data = json.loads(request.body)
+    medId = data['medId']
+    action = data['action']
+    print(medId)
+    print(action)
+
+    # receta = Receta.objects.get(idReceta = idReceta)
+    staff = request.user.id
+    med = Medicamento.objects.get(codigo=medId)
+    # receta, created = Receta.objects.filter(rutMed = staff)
+
+    # detalleReceta, created = DetalleReceta.objects.get_or_create(idReceta=receta, codmed=med)
+    
+    # if action == 'add':
+    #     detalleReceta.cantidad = (detalleReceta.cantidad + 1)
+    # elif action == 'remove':
+    #     detalleReceta.cantidad = (detalleReceta.cantidad - 1)
+
+    # detalleReceta.save()
+    
+    # if detalleReceta.cantidad <=0:
+    #     detalleReceta.delete()
+
+    return JsonResponse('Med was added', safe=False)
+
+# @csrf_exempt
+# def finalizar_receta(request):
+#     if request.user.is_authenticated:
+#         staff = request.user.id
+#         receta, created = Receta.objects.filter(rutMed = staff)
+#         listaMeds = receta.detallereceta_set.all()
+#     else:
+#         listaMeds = []
+#     context = {'listaMeds':listaMeds}
+#     return render(request, 'reserva/finalizar_receta.html', context) 
 
 #Enviar correo a usuario
 
@@ -152,3 +203,5 @@ def obtener_reservas(codigo):
     print(correos)
     print(cantidadRes)
     
+
+

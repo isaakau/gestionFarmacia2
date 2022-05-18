@@ -6,28 +6,65 @@
   <!-- la ide acá es traer todos los medicamentos de la base de datos y dentro de eso aplicar filtros -->
   <!-- <div class="container w-75 bg-light mt-5 rounded shadow" >
     <div class="row pb-5 align-items-stretch"> -->
+
   <div class="d-flex container">
     <div class="row">
+      
       {% for med in meds %}
       
-        <div class="col-sm-3 mt-3">
+        <div class="col-sm-3 m-4">
           <div class="card" style="width: 20rem;">
             <div class="card-body">
               <h5 class="card-title "><strong>{{med.nombreMed}}</strong></h5>
               <p class="card-text">{{med.principio}}</p>
               <p class="card-text">{{med.categoria}}</p>
               <p class="card-text">{{med.laboratorio}}</p>
-              <button type="button" class="btn btn-outline-success">Agregar a receta</button>
-              <a href="#" type="button" class="btn btn-outline-primary">Detalle</a>
+
+              <button data-med={{med.codigo}} data-action="add" type="button" class="btn btn-outline-success update-receta">Agregar a receta</button>
               <h4 class="pt-1" style="display: inline-block; float: right;">{{med.stock}}</h4>
             </div>
           </div>
         </div>
 
         {% endfor %}
+
+        <div class="container w-75 bg-light mt-5 rounded shadow" >
+          <div class="row p-3 align-items-stretch">
+            <div style="flex:2"><strong>Medicamento</strong></div>
+            <div style="flex:2"><strong>Principio Activo</strong></div>
+            <div style="flex:1"><strong>Formato</strong></div>
+            <div style="flex:1"><strong>Categoría</strong></div>
+            <div style="flex:1"><strong>Laboratorio</strong></div>
+            <div style="flex:1"><strong>Cantidad</strong></div>
+          </div>
+          
+        {% for med in listaMeds %}
+          <div class="row p-3 align-items-stretch">
+            <div style="flex:2">{{med.codmed.nombreMed}}</div>
+            <div style="flex:2">{{med.codmed.principio}}</div>
+            <div style="flex:1">{{med.codmed.formato}}</div>
+            <div style="flex:1">{{med.codmed.categoria}}</div>
+            <div style="flex:1">{{med.codmed.laboratorio}}</div>
+            <div style="flex:1">
+              <p class="quantity">{{med.cantidad}}</p>
+              <div class="quantity">
+                <img class="chg-quantity" src="{% static  'reserva/img/arriba.png' %}">
+            
+                <img class="chg-quantity" src="{% static  'reserva/img/abajo.png' %}">
+              </div>
+            </div>
+          </div>
+         {% endfor %} 
+        </div>
+
     </div>
   </div>
-    
+  <div class="container w-75 bg-light mt-5 rounded shadow" >
+    <div class="row p-5">
+      <div class="col-12">
+      </div>
+    </div>  
+  </div>
 </body> 
 
 {% endblock %} <!--aquí termina el bloque de código nuuevo -->

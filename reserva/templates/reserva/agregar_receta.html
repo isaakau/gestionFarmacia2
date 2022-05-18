@@ -1,0 +1,37 @@
+{% extends 'reserva/base.html' %}
+<!-- con este código se conecta al base.html -->
+{% load static %}
+<!--con este código traemos todos las imagenes css y js de la carpeta static-->
+
+{% block content %} {% load crispy_forms_tags %}
+
+<body>
+
+    <div class="row">
+        <div class="col-12 col-md-6 offset-md-3">
+            <div class="card">
+                <div class="card-body">
+                    <h2>Datos de la receta</h2>
+                    <form action="" method="post">
+
+                        {% csrf_token %} {{ form | crispy }}
+
+                        <div class="d-flex justify-content-end">
+                            <a type="reset" href="{% url 'gestion_medicamentos' %}" class="btn btn-outline-danger">Cancelar</a>
+                            <input type="submit" value="Guardar" class="btn btn-outline-success">
+                        </div>
+                        <hr>
+                        <br>
+                        <br>
+
+                    </form>
+                    {{ mensaje }}
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</body>
+
+{% endblock %}

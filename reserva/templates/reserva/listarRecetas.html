@@ -9,12 +9,13 @@
 <body>
     <div class="text-center">
         <h2>Gestión de Recetas</h2>
-        <a type="button" class="btn btn-outline-primary" href="{% url 'crear_receta' %}">Nueva Receta</a>
+        <a type="button" class="btn btn-outline-primary" href="{% url 'agregar_receta' %}">Nueva Receta</a>
     </div>
     <div class="d-flex container">
         <div class="row">
             {% for re in recetas %}
-            <div class="col-sm-3 mt-3">
+            <div class=" col-sm-3 m-5"> 
+                <!-- TODO que se muetre la ultima receta primero -->
                 <div class="card" style="width: 25rem;">
                     <div class="card-body">
                         <h5 class="card-title"><strong>Receta: {{re.idReceta}}</strong></h5>
@@ -22,7 +23,7 @@
                         <p class="card-text">Rut del Paciente: {{rutPaciente}}</p>
                         <p class="card-text">Observación: {{re.observacion}}</p>
                         <a type="button" class="btn btn-outline-success">Entregar</a>
-                        <!--<button type="button" class="btn btn-outline-success">Modificar</button>-->
+                        <a type="button" class="btn btn-outline-success idReceta" href="{% url 'receta' re.idReceta %}">Agregar Medicamentos</a>
                     </div>
                 </div>
             </div>

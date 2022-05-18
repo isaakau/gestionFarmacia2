@@ -1,7 +1,6 @@
 from django.db import models
 from twilio.rest import Client
 from django.contrib.auth.models import User
-import datetime
 
 class Laboratorio(models.Model): #tabla que contiene los laboratorios fabricantes de medicamentos
     idLab = models.AutoField(primary_key=True, verbose_name="Id del laboratorio (uso interno)") #id del laboratorio, es un autoincremental clave primaria que se utiliza en la tabla medicamento
@@ -37,7 +36,7 @@ class Medicamento(models.Model): #esta tabla guarda la información relacionada 
     vencimiento = models.DateField(verbose_name="Fecha de Vencimiento") #la fecha de vencimiento indicada por el fabricante
 
     def __str__(self):
-        return self.nombreMed
+        return str(self.codigo)
 
     # Enviar SMS
     def save(self, *args, **kwargs):
@@ -87,6 +86,7 @@ class DetalleReceta(models.Model):
     def __str__(self):
         detalle = "receta_n" + str(self.idReceta)+"medicamento_"+str(self.codmed)
         return detalle
+
 
 class Reserva(models.Model):
     idReserva = models.AutoField(primary_key=True)

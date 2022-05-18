@@ -7,19 +7,7 @@
   <div class="row p-5">
     <div class="col-12">
       <a href="{% url 'receta' %}" class="btn btn-outline-primary">Agregar más medicamentos</a>
-      <br>
-      <hr>
-      <br>
-      <table class="table">
-        <tr>
-          <th>
-            <h5>Total Medicamentos: <strong>3</strong></h5>
-          </th>
-          <th class="d-flex justify-content-end">
-            <a href="{% url 'finalizar_receta' %}" class="btn btn-outline-success">Finalizar receta</a>
-          </th>
-        </tr>
-      </table>
+      <a href="{% url 'finalizar_receta' %}" class="btn btn-outline-success">Finalizar receta</a>
     </div>
   </div>  
 </div>
@@ -33,15 +21,15 @@
     <div style="flex:1"><strong>Laboratorio</strong></div>
     <div style="flex:1"><strong>Cantidad</strong></div>
   </div>
-
+{% for med in listaMeds %}
   <div class="row p-3 align-items-stretch">
-    <div style="flex:2">Metformina</div>
-    <div style="flex:2">Metformina Clorhidrato 500mg</div>
-    <div style="flex:1">Comprimidos</div>
-    <div style="flex:1">Hipoglicemiante oral</div>
-    <div style="flex:1">Laboratorio Chile</div>
+    <div style="flex:2">{{med.codmed.nombreMed}}</div>
+    <div style="flex:2">{{med.codmed.principio}}</div>
+    <div style="flex:1">{{med.codmed.formato}}</div>
+    <div style="flex:1">{{med.codmed.categoria}}</div>
+    <div style="flex:1">{{med.codmed.laboratorio}}</div>
     <div style="flex:1">
-      <p class="quantity">2</p>
+      <p class="quantity">{{med.cantidad}}</p>
       <div class="quantity">
         <img class="chg-quantity" src="{% static  'reserva/img/arriba.png' %}">
     
@@ -49,7 +37,7 @@
       </div>
     </div>
   </div>
-  
+ {% endfor %} 
 </div>
 
 {% endblock %}

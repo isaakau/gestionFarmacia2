@@ -7,7 +7,6 @@ from .forms import *
 from django.contrib.auth.decorators import login_required, permission_required
 from django.contrib.auth.models import User
 from .Carrito import *
-import urllib
 import datetime
 
 # Aquí es donde declaramos nuestras vistas personalizadas, a partir de los html que tenemos en la carpeta templates
@@ -191,7 +190,7 @@ def asignar_receta(request):
         authuser = request.user
         rutMed = authuser.username
         form = AsignarPacienteForm(data=request.POST)
-        carrito = Carrito.traer_carrito(request)
+        
         if form.is_valid():
             re = Receta(
                 rutPaciente=form.cleaned_data.get("rutPaciente"), 
@@ -202,13 +201,7 @@ def asignar_receta(request):
                 entregada=False)
             reId=re.idReceta
             re.save()
-            for key, value in carrito:
-                det = DetalleReceta(
-                    idReceta=reId,
-                    codmed=value["id"],
-                    cantidad=value["cantidad"]
-                )
-                det.save()
+            # Carrito.guardar_carrito_bd(reId)
         else:
             data["form"] = form
     limpiar_medicamento_carrito(request)

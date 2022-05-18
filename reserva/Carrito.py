@@ -1,3 +1,5 @@
+from .models import *
+
 class Carrito:
     def __init__(self, request):
         self.request = request
@@ -45,10 +47,18 @@ class Carrito:
         carrito = self.session["ca"]
         self.session.modified = True
 
-    def traer_carrito(request, self):
-        carrito = self.session.get("ca")
-        print("carrito: ")
-        print(carrito)
-        return(carrito)
 
+    # def guardar_carrito_bd(self, reId):
+    #     for key, values in self.carrito:
+    #         det = DetalleReceta(
+    #                     idReceta=reId,
+    #                     codmed=value["id"],
+    #                     cantidad=value["cantidad"]
+    #                 )
+    #         print(reId)
+    #         print(value["id"])   
+    #         print(value["cantidad"])
+    #         det.save()
+
+        
         

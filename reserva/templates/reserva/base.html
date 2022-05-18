@@ -43,12 +43,13 @@
                             Gestión Recetas
                             </a>
                 </li>
-                {% endif %} {% endif %}
+                {% endif %} {% if perms.reserva.add_receta %} {% endif %}
                 <li class="nav-item">
                     <a class="nav-link" href="{% url 'crear_receta2' %}" role="button">
                             Crear Receta
                             </a>
                 </li>
+                {% endif %}
 
 
             </ul>

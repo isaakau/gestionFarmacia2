@@ -72,7 +72,7 @@ def modificar_medicamento(request, codigo):
             data["form"] = form
 
     return render(request, 'reserva/modificarMedicamento.html', data)
-
+@permission_required('reserva.view_receta')
 def listar_recetas(request):
     recetas = Receta.objects.all()
     context = {'recetas':recetas}

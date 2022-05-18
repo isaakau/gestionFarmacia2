@@ -1,11 +1,7 @@
-<<<<<<< HEAD
 from django.conf import settings
-from django.shortcuts import render
 from django.template.loader import get_template
 from django.core.mail import EmailMultiAlternatives
-=======
 from django.shortcuts import render, redirect, get_object_or_404
->>>>>>> origin/master
 from .models import *
 from .forms import *
 from django.contrib.auth.decorators import login_required, permission_required
@@ -102,8 +98,13 @@ def crear_receta(request):
     return render(request, 'reserva/crear_receta.html', context) 
 
 def finalizar_receta(request):
-<<<<<<< HEAD
-    context = {}
+    if request.user.is_authenticated:
+        receta, created = Receta.objects.get_or_create(entregada=False)
+        listaMeds = receta.detallereceta_set.all()
+    else:
+        listaMeds = []
+        receta = {'get_meds_total':0}
+    context = {'listaMeds':listaMeds}
     return render(request, 'reserva/finalizar_receta.html', context) 
 
 #Enviar correo a usuario
@@ -133,13 +134,11 @@ def enviar_correo(request):
         # print('Envio de correo!')
 
     return render(request, 'reserva/enviar_correo.html', {})
-=======
-    if request.user.is_authenticated:
-        receta, created = Receta.objects.get_or_create(entregada=False)
-        listaMeds = receta.detallereceta_set.all()
-    else:
-        listaMeds = []
-        receta = {'get_meds_total':0}
-    context = {'listaMeds':listaMeds}
-    return render(request, 'reserva/finalizar_receta.html', context) 
->>>>>>> origin/master
+    
+    
+    
+    
+    
+    
+    
+    

@@ -12,9 +12,6 @@ urlpatterns = [
     path('listar_recetas', listar_recetas, name="listar_recetas"),
     path('crear_receta/', crear_receta, name="crear_receta"),
     path('finalizar_receta/', finalizar_receta, name="finalizar_receta"),
-<<<<<<< HEAD
     path('enviar_correo/', enviar_correo, name="enviar_correo"),
-=======
 
->>>>>>> origin/master
 ]

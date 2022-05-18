@@ -9,3 +9,4 @@ class MedicamentoForm(forms.ModelForm):
         widgets = {
             "vencimiento": forms.SelectDateWidget()
         }
+

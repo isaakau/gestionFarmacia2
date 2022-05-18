@@ -5,6 +5,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from .models import *
 from .forms import *
 from django.contrib.auth.decorators import login_required, permission_required
+from django.contrib.auth.models import User
 
 # Aquí es donde declaramos nuestras vistas personalizadas, a partir de los html que tenemos en la carpeta templates
 #en el codigo de abajo solo se pone reserva porque la función busca automáticamente la carpeta templates
@@ -57,7 +58,12 @@ def modificar_medicamento(request, codigo):
             #esto es para probar que detecta los cambios de stock
             if int(nuevoStock)>int(antiguoStock): #aca se evalua si el stock nuevo es mayor respecto al antiguo, osea si se repuso stock de un medicamento
                 #esta es la logica basa que se debe usar para lo de las reservas
-                print("Se aumentó el stock")
+                print("el stock aumento")
+                authuser = request.user
+                print(authuser)
+                mail = authuser.email
+                print(mail)
+                send_email(mail)
             else:
                 print("Se disminuyó el stock")
             #     reservados = 0
@@ -134,10 +140,15 @@ def enviar_correo(request):
 
     return render(request, 'reserva/enviar_correo.html', {})
     
+def obtener_reservas(codigo):
+    #le entregamos un codigo y nos retorna si hay reservas, cuantas y los datos de los pacientes
+    reservas = Reserva.objects.get(codigo=codigo)
+    for i in reservas:
+        telefonos = reservas[i].telefonoPac
+        correos = reservas[i].correoPac
+        cantidadRes = reservas[i].cantidadReservada
     
-    
-    
-    
-    
-    
+    print(telefonos)
+    print(correos)
+    print(cantidadRes)
     

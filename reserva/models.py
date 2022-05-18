@@ -24,7 +24,6 @@ class Categoria(models.Model):
     def __str__(self):
         return self.nombreCat
 
-    
 class Medicamento(models.Model): #esta tabla guarda la información relacionada al medicamento
     codigo = models.AutoField(primary_key=True, verbose_name="Código del Medicamento") #codigo asignado de acuerdo a control interno, es clave primaria
     nombreMed = models.CharField(max_length=25, verbose_name="Nombre del Medicamento") #es el nombre comercial del medicamento
@@ -87,12 +86,13 @@ class DetalleReceta(models.Model):
         detalle = "receta_n" + str(self.idReceta)+"medicamento_"+str(self.codmed)
         return detalle
 
-
 class Reserva(models.Model):
     idReserva = models.AutoField(primary_key=True)
     idDetalle = models.ForeignKey(DetalleReceta, on_delete=models.RESTRICT)
     codMed = models.ForeignKey(Medicamento, on_delete=models.RESTRICT)
     rutPaciente = models.ForeignKey(Paciente, on_delete=models.RESTRICT)
+    correoPac = models.CharField(max_length=100)
+    telefonoPac = models.IntegerField()
     cantidadReservada = models.IntegerField()
 
     def __str__(self):

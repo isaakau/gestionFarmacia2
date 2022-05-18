@@ -4,7 +4,7 @@
 <html lang="es">
 
 <head>
-    <title>Gestor Farmacia</title>
+    <title>Gestión Farmacia Cesfam</title>
     <link rel="shortcut icon" href="{%static 'reserva/img/favicon.ico' %}" type="image/x-icon">
     <!-- Required meta tags -->
     <meta charset="utf-8">
@@ -38,12 +38,72 @@
                             </a>
                 </li>
                 {% endif %} {% if perms.reserva.add_receta %}
-                <li class="nav-item dropdown">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                <li class="nav-item">
                     <a class="nav-link" href="{% url 'listar_recetas' %}" role="button">
                             Gestión Recetas
                             </a>
                 </li>
-                {% endif %} {% endif %}
+                {% endif %} {% if perms.reserva.add_receta %} {% endif %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'crear_receta2' %}" role="button">
+                            Crear Receta
+                            </a>
+                </li>
+                {% endif %}
 
 
             </ul>

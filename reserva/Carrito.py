@@ -22,7 +22,6 @@ class Carrito:
             }
         else:
             self.carrito[id]["cantidad"]+=1
-
         self.guardar_carrito()
 
     def guardar_carrito(self):

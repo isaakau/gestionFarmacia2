@@ -8,8 +8,21 @@
 
 <body>
     <div class="text-center">
-        <h2>Gestión de Recetas</h2>
-        <a type="button" class="btn btn-outline-primary" href="{% url 'crear_receta' %}">Nueva Receta</a>
+        <h2>Recetas</h2>
+    </div>
+    <div class="container">
+        <div class="row">
+            <form method="get">
+                <div id="custom-search-input">
+                    <div class="col-md-12">
+                        <input type="text" class="form-control" placeholder="Ingrese rut del paciente" name="buscar">
+                        <span>
+                            <button type="submit" class="btn-success">Buscar</button>
+                        </span>
+                    </div>
+                </div>
+            </form>
+        </div>
     </div>
     <div class="d-flex container">
         <div class="row">
@@ -19,7 +32,7 @@
                     <div class="card-body">
                         <h5 class="card-title"><strong>Receta: {{re.idReceta}}</strong></h5>
                         <p class="card-text">Fecha de ingreso: {{re.fechaReceta}}</p>
-                        <p class="card-text">Rut del Paciente: {{rutPaciente}}</p>
+                        <p class="card-text">Rut del Paciente: {{re.rutPaciente}}</p>
                         <p class="card-text">Observación: {{re.observacion}}</p>
                         <a type="button" class="btn btn-outline-success">Entregar</a>
                         <!--<button type="button" class="btn btn-outline-success">Modificar</button>-->

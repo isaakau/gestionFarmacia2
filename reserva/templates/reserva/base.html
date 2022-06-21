@@ -31,76 +31,15 @@
                             Inicio
                         </a>
                 </li>
-                {% if user.is_authenticated %} {% if perms.reserva.add_medicamento %}
+                {% if user.is_authenticated %}
                 <li class="nav-item">
                     <a class="nav-link" href="{% url 'gestion_medicamentos' %}" role="button">
-                            Gestión Medicamentos
+                            Medicamentos
                             </a>
                 </li>
-                {% endif %} {% if perms.reserva.add_receta %}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
                 <li class="nav-item">
                     <a class="nav-link" href="{% url 'listar_recetas' %}" role="button">
-                            Gestión Recetas
-                            </a>
-                </li>
-                {% endif %} {% if perms.reserva.add_receta %} {% endif %}
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'crear_receta2' %}" role="button">
-                            Crear Receta
+                            Recetas
                             </a>
                 </li>
                 {% endif %}

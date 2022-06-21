@@ -8,8 +8,23 @@
 
 <body>
     <div class="text-center">
-        <h2>Gestión de Medicamentos</h2>
-        <a type="button" class="btn btn-outline-primary" href="{% url 'crear_medicamento' %}">Nuevo Medicamento</a>
+        <h2>Medicamentos</h2>
+        {% if perms.reserva.add_medicamento %}
+        <a type="button" class="btn btn-outline-primary" href="{% url 'crear_medicamento' %}">Nuevo Medicamento</a> {% endif %}
+    </div>
+    <div class="container">
+        <div class="row">
+            <form method="get">
+                <div id="custom-search-input">
+                    <div class="col-md-12">
+                        <input type="text" class="form-control" placeholder="Ingrese nombre o principio activo" name="buscar">
+                        <span>
+                            <button type="submit" class="btn-success">Buscar</button>
+                        </span>
+                    </div>
+                </div>
+            </form>
+        </div>
     </div>
     <div class="d-flex container">
         <div class="row">
@@ -24,14 +39,47 @@
                         <p class="card-text">Laboratorio: {{med.laboratorio}}</p>
                         <p class="card-text">Stock: {{med.stock}}</p>
                         <p class="card-text">Vencimiento: {{med.vencimiento}}</p>
+                        {% if perms.reserva.add_medicamento %}
                         <a type="button" class="btn btn-outline-success" href="{% url 'modificar_medicamento' med.codigo %}">Modificar</a>
-                        <!--<button type="button" class="btn btn-outline-danger">Vencer</button>-->
+                        <button type="button" class="btn btn-outline-danger">Vencer</button> {% endif %} {% if perms.reserva.add_receta %}
+                        <a type="button" class="btn btn-outline-success" href="{% url 'agregar_medicamento_carrito' med.codigo %}">Agregar a la receta</a> {% endif %}
                     </div>
                 </div>
             </div>
-
-            {% endfor %}
+            {% endfor %} {% if perms.reserva.add_receta %}
+            <div class="col-4">
+                <div class="alert alert-primary" role="alert">
+                    <table class="table table-bordered">
+                        <thead>
+                            <h4 scope="row" colspan="3" class="text-center">Receta</h4>
+                            <tr>
+                                <th scope="col">Código</th>
+                                <th scope="col">Nombre</th>
+                                <th scope="col">Cantidad</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for meds in carrito %}
+                            <tr>
+                                <td>{{meds.codigo}}</td>
+                                <td>{{meds.nombremed}}</td>
+                                <td>{{meds.cantidad}}</td>
+                            </tr>
+                            {% endfor %}
+                            <!-- <tr>
+                                <td colspan="3">
+                                    <div class="alert alert-danger text-center">No ha agregado medicamentos</div>
+                                </td>
+                            </tr> -->
+                        </tbody>
+                    </table>
+                </div>
+                <div class="row text-center">
+                    <div class="col-6"><a href="{% url 'limpiar_medicamento_carrito' %}" class="btn btn-outline-danger">Limpiar</a></div>
+                    <div class="col-6"><a href="{% url 'asignar_receta' %}" class="btn btn-outline-success">Guardar</a></div>
+                </div>
+            </div>
         </div>
     </div>
 </body>
-{% endblock %}
+{% endif %} {% endblock %}

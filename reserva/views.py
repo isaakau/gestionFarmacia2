@@ -21,7 +21,7 @@ def home(request):
 def gestion_medicamentos(request):
     #este metodo abre el mantenedor creado en ese html
     carrito = Carrito(request)
-    queryset = request.GET.get("buscar")
+    queryset = request.GET.get("buscarmed")
     if queryset:
         meds = Medicamento.objects.filter(
             Q(nombreMed__icontains = queryset) |
@@ -93,42 +93,61 @@ def modificar_medicamento(request, codigo):
             data["form"] = form
 
     return render(request, 'medicamentos/modificarMedicamento.html', data)
+
 @permission_required('reserva.view_receta')
 def listar_recetas(request):
-    queryset = request.GET.get("buscar")
+    queryset = request.GET.get("buscarre")
     if queryset:
         recetas = Receta.objects.filter(
+            Q(entregada=False) &
             Q(rutPaciente = queryset) 
         )
     else:
-        recetas = Receta.objects.all()    
+        recetas = Receta.objects.filter(
+            entregada=False
+        )    
     context = {'recetas':recetas}
     return render(request, 'reserva/listarRecetas.html', context)
+
+@permission_required('reserva.view_receta')
+def listarEntregadas(request):
+    queryset = request.GET.get("buscarre2")
+    if queryset:
+        recetas = Receta.objects.filter(
+            Q(entregada=True) &
+            Q(rutPaciente = queryset)
+        )
+    else:
+        recetas = Receta.objects.filter(
+            entregada=True
+        )
+    context = {'recetas':recetas}
+    return render(request, 'reserva/listarEntregadas.html', context)
 
 def receta(request):
     meds = Medicamento.objects.all()
     context = {'meds':meds}
     return render(request, 'reserva/receta.html', context) 
 
-@permission_required('reserva.add_receta')
-def crear_receta(request):
-    if request.user.is_authenticated:
-        receta, created = Receta.objects.filter(entregada=False)
-        listaMeds = receta.detallereceta_set.all()
-    else:
-        listaMeds = []
-    context = {'listaMeds':listaMeds}
-    return render(request, 'reserva/crear_receta.html', context) 
+# @permission_required('reserva.add_receta')
+# def crear_receta(request):
+#     if request.user.is_authenticated:
+#         receta, created = Receta.objects.filter(entregada=False)
+#         listaMeds = receta.detallereceta_set.all()
+#     else:
+#         listaMeds = []
+#     context = {'listaMeds':listaMeds}
+#     return render(request, 'reserva/crear_receta.html', context) 
 
-def finalizar_receta(request):
-    if request.user.is_authenticated:
-        receta, created = Receta.objects.filter(entregada=False)
-        listaMeds = receta.detallereceta_set.all()
-    else:
-        listaMeds = []
-        receta = {'get_meds_total':0}
-    context = {'listaMeds':listaMeds}
-    return render(request, 'reserva/finalizar_receta.html', context) 
+# def finalizar_receta(request):
+#     if request.user.is_authenticated:
+#         receta, created = Receta.objects.filter(entregada=False)
+#         listaMeds = receta.detallereceta_set.all()
+#     else:
+#         listaMeds = []
+#         receta = {'get_meds_total':0}
+#     context = {'listaMeds':listaMeds}
+#     return render(request, 'reserva/finalizar_receta.html', context) 
 
 #Enviar correo a usuario
 
@@ -158,46 +177,52 @@ def enviar_correo(request):
 
     return render(request, 'reserva/enviar_correo.html', {})
     
-def obtener_reservas(codigo):
-    #le entregamos un codigo y nos retorna si hay reservas, cuantas y los datos de los pacientes
-    reservas = Reserva.objects.get(codigo=codigo)
-    for i in reservas:
-        telefonos = reservas[i].telefonoPac
-        correos = reservas[i].correoPac
-        cantidadRes = reservas[i].cantidadReservada
+# def obtener_reservas(codigo):
+#     #le entregamos un codigo y nos retorna si hay reservas, cuantas y los datos de los pacientes
+#     reservas = Reserva.objects.get(codigo=codigo)
+#     for i in reservas:
+#         telefonos = reservas[i].telefonoPac
+#         correos = reservas[i].correoPac
+#         cantidadRes = reservas[i].cantidadReservada
     
-    print(telefonos)
-    print(correos)
-    print(cantidadRes)
+#     print(telefonos)
+#     print(correos)
+#     print(cantidadRes)
     
 #prueba carrito2
+@permission_required('reserva.add_receta')
 def crear_receta2(request):
     medicamentos = Medicamento.objects.all()
     return render(request, 'reserva/crearRecetas.html', {'medicamentos':medicamentos})
 
+@permission_required('reserva.add_receta')
 def agregar_medicamento_carrito(request, medicamento_codigo):
     carrito = Carrito(request)
     medicamento = Medicamento.objects.get(codigo=medicamento_codigo)
     carrito.agregar(medicamento)
     return redirect('gestion_medicamentos')
 
+@permission_required('reserva.add_receta')
 def eliminar_medicamento_carrito(request, medicamento_codigo):
     carrito = Carrito(request)
     medicamento = Medicamento.objects.get(codigo=medicamento_codigo)
     carrito.eliminar(medicamento)
     return redirect('gestion_medicamentos')
 
+@permission_required('reserva.add_receta')
 def restar_medicamento_carrito(request, medicamento_codigo):
     carrito = Carrito(request)
     medicamento = Medicamento.objects.get(codigo=medicamento_codigo)
     carrito.restar(medicamento)
     return redirect('gestion_medicamentos')
 
+@permission_required('reserva.add_receta')
 def limpiar_medicamento_carrito(request):
     carrito = Carrito(request)
     carrito.limpiar()
     return redirect('gestion_medicamentos')
 
+@permission_required('reserva.add_receta')
 def asignar_receta(request):
     data = {
         'form': AsignarPacienteForm()

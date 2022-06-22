@@ -8,15 +8,15 @@
 
 <body>
     <div class="text-center">
-        <h2>Recetas</h2>
-        <a type="button" class="btn btn-outline-primary" href="{% url 'listarEntregadas' %}">Ver recetas entregadas</a>
+        <h2>Recetas Entregadas</h2>
+        <a type="button" class="btn btn-outline-primary" href="{% url 'listar_recetas' %}">Volver</a>
     </div>
     <div class="container">
         <div class="row">
             <form method="get">
                 <div id="custom-search-input">
                     <div class="col-md-12">
-                        <input type="text" class="form-control" placeholder="Ingrese rut del paciente" name="buscarre" value="{{ request.GET.buscarre }}">
+                        <input type="text" class="form-control" placeholder="Ingrese rut del paciente" name="buscarre2" value="{{ request.GET.buscarre2 }}">
                         <span>
                             <button type="submit" class="btn-success">Buscar</button>
                         </span>
@@ -35,9 +35,6 @@
                         <p class="card-text">Fecha de ingreso: {{re.fechaReceta}}</p>
                         <p class="card-text">Rut del Paciente: {{re.rutPaciente}}</p>
                         <p class="card-text">Observación: {{re.observacion}}</p>
-                        {% if perms.reserva.add_medicamento %}
-                        <a type="button" class="btn btn-outline-success">Entregar</a> {% endif %}{% if perms.reserva.add_receta %}
-                        <button type="button" class="btn btn-outline-success">Modificar</button> {% endif %}
                     </div>
                 </div>
             </div>

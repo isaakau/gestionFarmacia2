@@ -38,7 +38,7 @@ INSTRUCCIONES PARA LA BASE DE DATOS
 3. A continuación se ejecuta el comando python manage.py migrate nombreapp que creará efectivamente las tablas.
 4. Luego de esto podemos activar el django admin para gestionar la bd, que se hace creando un superusuario con el comando python manage.py createsuperuser.
 La contraseña debe tener al menos 8 caracteres y al escribirla no la vemos en la terminal. Con esto, el framework ya sabe que estamos creando un usuario para
-acceder al admin. (la que se creó para probar es admin y la clave es admin)(se crearon dos usuarios de prueba: 102366584-4 medicoprueba1 y 7523625-4 farmaciaprueba1)
+acceder al admin. (la que se creó para probar es admin y la clave es admin)
 5. Para utilizar el admin se escribe url/admin y se logea con la cuenta que creamos anteriormente. De esta forma visualizaremos las tablas que genera django automáticamente
 para los usuarios y los grupos.
 6. Luego, para poder ver nuestrar tablas propias en este admin, necesitamos ir al archivo admin.py y escribir la linea "from .models import" y a continuación, cada una de las
@@ -53,6 +53,8 @@ Usuarios para probar los correos
 2. paty paty1234
 3. mrcutux cutu1234
 4. fisko francisco1234
+5. medico: 18224178-4 isamed123
+6. farmacia: 17119842-9 felifarm1
 
 PENDIENTES
 CREAR USUARIOS CON ROLES (LA EVALUACION DE PERMISOS DE LOS VIEWS ESTA FUNCIONANDO)

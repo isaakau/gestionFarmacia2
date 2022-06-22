@@ -17,7 +17,7 @@
             <form method="get">
                 <div id="custom-search-input">
                     <div class="col-md-12">
-                        <input type="text" class="form-control" placeholder="Ingrese nombre o principio activo" name="buscar">
+                        <input type="text" class="form-control" placeholder="Ingrese nombre o principio activo" name="buscarmed" value="{{ request.GET.buscarmed }}">
                         <span>
                             <button type="submit" class="btn-success">Buscar</button>
                         </span>
@@ -26,10 +26,47 @@
             </form>
         </div>
     </div>
+    {% if perms.reserva.add_receta %}
+    <div class="col-4">
+        <div class="alert alert-primary" role="alert">
+            <table class="table table-bordered">
+                <thead>
+                    <h4 scope="row" colspan="3" class="text-center">Receta</h4>
+                    <tr>
+                        <th scope="col">Código</th>
+                        <th scope="col">Nombre</th>
+                        <th scope="col">Cantidad</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% if request.session.carrito.items %} {% for key, value in request.session.carrito.items %}
+                    <tr>
+                        <td>{{value.codigo}}</td>
+                        <td>{{value.nombremed}}</td>
+                        <td>{{value.cantidad}}
+                            <a href="{% url 'agregar_medicamento_carrito' codigo %}" class="badge btn btn-success">+</a>
+                            <a href="{% url 'restar_medicamento_carrito' codigo %}" class="badge btn btn-danger">-</a>
+                        </td>
+                    </tr>
+                    {% endfor %} {% else %}
+                    <tr>
+                        <td colspan="3">
+                            <div class="alert alert-danger text-center">No ha agregado medicamentos</div>
+                        </td>
+                    </tr>
+                    {% endif %}
+                </tbody>
+            </table>
+        </div>
+        {% endif %}
+        <div class="row text-center">
+            <div class="col-6"><a href="{% url 'limpiar_medicamento_carrito' %}" class="btn btn-outline-danger">Limpiar</a></div>
+            <div class="col-6"><a href="{% url 'asignar_receta' %}" class="btn btn-outline-success">Guardar</a></div>
+        </div>
+    </div>
     <div class="d-flex container">
         <div class="row">
             {% for med in meds %}
-
             <div class="col-sm-3 mt-3">
                 <div class="card" style="width: 25rem;">
                     <div class="card-body">
@@ -46,40 +83,8 @@
                     </div>
                 </div>
             </div>
-            {% endfor %} {% if perms.reserva.add_receta %}
-            <div class="col-4">
-                <div class="alert alert-primary" role="alert">
-                    <table class="table table-bordered">
-                        <thead>
-                            <h4 scope="row" colspan="3" class="text-center">Receta</h4>
-                            <tr>
-                                <th scope="col">Código</th>
-                                <th scope="col">Nombre</th>
-                                <th scope="col">Cantidad</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {% for meds in carrito %}
-                            <tr>
-                                <td>{{meds.codigo}}</td>
-                                <td>{{meds.nombremed}}</td>
-                                <td>{{meds.cantidad}}</td>
-                            </tr>
-                            {% endfor %}
-                            <!-- <tr>
-                                <td colspan="3">
-                                    <div class="alert alert-danger text-center">No ha agregado medicamentos</div>
-                                </td>
-                            </tr> -->
-                        </tbody>
-                    </table>
-                </div>
-                <div class="row text-center">
-                    <div class="col-6"><a href="{% url 'limpiar_medicamento_carrito' %}" class="btn btn-outline-danger">Limpiar</a></div>
-                    <div class="col-6"><a href="{% url 'asignar_receta' %}" class="btn btn-outline-success">Guardar</a></div>
-                </div>
-            </div>
+            {% endfor %}
         </div>
     </div>
 </body>
-{% endif %} {% endblock %}
+{% endblock %}

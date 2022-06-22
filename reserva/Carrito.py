@@ -47,17 +47,17 @@ class Carrito:
         self.session.modified = True
 
 
-    # def guardar_carrito_bd(self, reId):
-    #     for key, values in self.carrito:
-    #         det = DetalleReceta(
-    #                     idReceta=reId,
-    #                     codmed=value["id"],
-    #                     cantidad=value["cantidad"]
-    #                 )
-    #         print(reId)
-    #         print(value["id"])   
-    #         print(value["cantidad"])
-    #         det.save()
+    def guardar_carrito_bd(self, reId):
+        for key, values in self.carrito:
+            det = DetalleReceta(
+                        idReceta=reId,
+                        codmed=value["id"],
+                        cantidad=value["cantidad"]
+                    )
+            print(reId)
+            print(value["id"])   
+            print(value["cantidad"])
+            det.save()
 
         
         

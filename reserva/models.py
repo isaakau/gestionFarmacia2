@@ -68,10 +68,10 @@ class Receta(models.Model): #Esta tabla contiene la receta que es entregada por 
     #medicamento = models.ManyToManyField(Medicamento) #este se sacaría porque iría en la entidad de abajo
     fechaReceta = models.DateTimeField(auto_now_add=True, verbose_name="Fecha de Emisión") #se añade automaticamente la fecha en que se ingreso la receta
     rutPaciente = models.ForeignKey(Paciente, on_delete=models.RESTRICT) #es el rut del paciente al cual se le hace la receta
-    rutMed = models.ForeignKey(User, on_delete=models.RESTRICT) #el rut del médico que receta la orden, se obtiene de la tabla Users de django
+    rutMed = models.CharField(max_length=50) #el rut del médico que receta la orden
     observacion = models.CharField(max_length=200, verbose_name="Observación del Médico") #una observación adicional del médico en caso de ser necesaria, o un detalle de la toma de medicamentos
     rutReceptor = models.CharField(editable=False, default=0, max_length=10, verbose_name="Rut del que Retira")
-    entregada = models.BooleanField(verbose_name="Receta Entregada")
+    entregada = models.BooleanField(verbose_name="Receta Entregada", default=False)
 
     def __str__(self):
         return str(self.idReceta)
@@ -79,7 +79,7 @@ class Receta(models.Model): #Esta tabla contiene la receta que es entregada por 
 class DetalleReceta(models.Model):
     idDetalle = models.AutoField(primary_key=True)
     idReceta = models.ForeignKey(Receta, on_delete=models.RESTRICT)
-    codmed = models.ForeignKey(Medicamento, on_delete=models.RESTRICT)
+    codmed = models.IntegerField()
     cantidad = models.IntegerField(verbose_name="Cantidad del Medicamento") #cantidad del medicamento ingresado en la receta
 
     def __str__(self):
@@ -91,8 +91,8 @@ class Reserva(models.Model):
     idDetalle = models.ForeignKey(DetalleReceta, on_delete=models.RESTRICT)
     codMed = models.ForeignKey(Medicamento, on_delete=models.RESTRICT)
     rutPaciente = models.ForeignKey(Paciente, on_delete=models.RESTRICT)
-    correoPac = models.CharField(max_length=100)
-    telefonoPac = models.IntegerField()
+    correoPac = models.CharField(max_length=100, default="")
+    telefonoPac = models.IntegerField(default=0)
     cantidadReservada = models.IntegerField()
 
     def __str__(self):

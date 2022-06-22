@@ -7,23 +7,32 @@ from .models import *
 from .forms import *
 from django.contrib.auth.decorators import login_required, permission_required
 from django.contrib.auth.models import User
-from django.http import JsonResponse
-from django.views.decorators.csrf import csrf_exempt
-import json
+from .Carrito import *
+import datetime
+from django.db.models import Q
 
 # Aquí es donde declaramos nuestras vistas personalizadas, a partir de los html que tenemos en la carpeta templates
 #en el codigo de abajo solo se pone reserva porque la función busca automáticamente la carpeta templates
 def home(request):
-    return render(request, 'reserva/home.html') 
-#lo que hicimos fue definir como home, el archivo html que se llama home
+    return render(request, 'reserva/base.html') 
+#lo que hicimos fue definir como home, el archivo html que se llama base
 #esto quiere decir que cuando la url de la pagina no tenga nada después del /, nos redirecciona a esta pagina home
 
 @permission_required('reserva.view_medicamento')
 def gestion_medicamentos(request):
-    #este metodo abre el mantenedor creado en ese html 
-    meds = Medicamento.objects.all() #aqui se guardan todos los objetos de la tabla Medicamento en la BD
+    #este metodo abre el mantenedor creado en ese html
+    carrito = Carrito(request)
+    queryset = request.GET.get("buscar")
+    if queryset:
+        meds = Medicamento.objects.filter(
+            Q(nombreMed__icontains = queryset) |
+            Q(principio__icontains = queryset)
+        ).distinct()
+    else:
+        meds = Medicamento.objects.all() #aqui se guardan todos los objetos de la tabla Medicamento en la BD
     context = {'meds':meds} #este meds es el que se usa en el for del html para listar cada elemento
-    return render(request, 'reserva/VerMedicamentos.html', context)
+
+    return render(request, 'medicamentos/VerMedicamentos.html', context)
 
 @permission_required('reserva.add_medicamento')
 def crear_medicamento(request):
@@ -40,7 +49,7 @@ def crear_medicamento(request):
         else:
             data["form"] = form
     
-    return render(request, 'reserva/agregarMedicamentos.html', data)
+    return render(request, 'medicamentos/agregarMedicamentos.html', data)
     
 @permission_required('reserva.change_medicamento')
 def modificar_medicamento(request, codigo):
@@ -84,11 +93,16 @@ def modificar_medicamento(request, codigo):
         else:
             data["form"] = form
 
-    return render(request, 'reserva/modificarMedicamento.html', data)
-
+    return render(request, 'medicamentos/modificarMedicamento.html', data)
 @permission_required('reserva.view_receta')
 def listar_recetas(request):
-    recetas = Receta.objects.all() #debería traer sólo las que no estan entregadas
+    queryset = request.GET.get("buscar")
+    if queryset:
+        recetas = Receta.objects.filter(
+            Q(rutPaciente = queryset) 
+        )
+    else:
+        recetas = Receta.objects.all()    
     context = {'recetas':recetas}
     return render(request, 'reserva/listarRecetas.html', context)
 
@@ -203,5 +217,56 @@ def obtener_reservas(codigo):
     print(correos)
     print(cantidadRes)
     
+#prueba carrito2
+def crear_receta2(request):
+    medicamentos = Medicamento.objects.all()
+    return render(request, 'reserva/crearRecetas.html', {'medicamentos':medicamentos})
 
+def agregar_medicamento_carrito(request, medicamento_codigo):
+    carrito = Carrito(request)
+    medicamento = Medicamento.objects.get(codigo=medicamento_codigo)
+    carrito.agregar(medicamento)
+    return redirect('gestion_medicamentos')
+
+def eliminar_medicamento_carrito(request, medicamento_codigo):
+    carrito = Carrito(request)
+    medicamento = Medicamento.objects.get(codigo=medicamento_codigo)
+    carrito.eliminar(medicamento)
+    return redirect('gestion_medicamentos')
+
+def restar_medicamento_carrito(request, medicamento_codigo):
+    carrito = Carrito(request)
+    medicamento = Medicamento.objects.get(codigo=medicamento_codigo)
+    carrito.restar(medicamento)
+    return redirect('gestion_medicamentos')
+
+def limpiar_medicamento_carrito(request):
+    carrito = Carrito(request)
+    carrito.limpiar()
+    return redirect('gestion_medicamentos')
+
+def asignar_receta(request):
+    data = {
+        'form': AsignarPacienteForm()
+    }
+    if request.method == 'POST':
+        authuser = request.user
+        rutMed = authuser.username
+        form = AsignarPacienteForm(data=request.POST)
+        
+        if form.is_valid():
+            re = Receta(
+                rutPaciente=form.cleaned_data.get("rutPaciente"), 
+                fechaReceta=datetime.datetime.now(),
+                rutMed=rutMed, 
+                observacion=form.cleaned_data.get("observacion"),
+                rutReceptor=0,
+                entregada=False)
+            reId=re.idReceta
+            re.save()
+            # Carrito.guardar_carrito_bd(reId)
+        else:
+            data["form"] = form
+    limpiar_medicamento_carrito(request)
+    return render(request, 'reserva/asignar_receta_paciente.html', data)
 

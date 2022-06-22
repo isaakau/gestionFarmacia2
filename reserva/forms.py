@@ -10,12 +10,11 @@ class MedicamentoForm(forms.ModelForm):
             "vencimiento": forms.SelectDateWidget()
         }
 
-class RecetaForm(forms.ModelForm):
+class RutPacienteForm(forms.Form):
     class Meta:
-        model = Receta
-        fields = '__all__'
+        model = Paciente
+        fields = ['rutPaciente']
 
-        widgets = {
-            #"vencimiento": forms.SelectDateWidget()
-        }
-
+class AsignarPacienteForm(forms.Form):
+    rutPaciente = forms.ModelChoiceField(queryset=Paciente.objects.all())
+    observacion = forms.CharField(max_length=200, help_text="Ingrese observaciones e indicaciones para el paciente")
